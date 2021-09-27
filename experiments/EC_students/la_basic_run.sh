@@ -7,6 +7,7 @@ EXPERIMENT_NAME="la_basic"
 CORES=4
 MANAGER_PATH="experiments/EC_students/la_basic.py"
 NO_LA="${1:-}"
+EVALUATION_TIME=20
 
 set -x
 
@@ -25,5 +26,6 @@ for i in $(seq 1 $N); do
     --run $i \
     --experiment-name $EXPERIMENT_NAME \
     --manager $MANAGER_PATH \
-    --n-cores $CORES
+    --n-cores $CORES \
+    --evaluation-time $EVALUATION_TIME
 done

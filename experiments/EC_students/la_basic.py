@@ -85,9 +85,9 @@ async def run():
     """
 
     # experiment params #
-    num_generations = 100 # ask Koen
-    population_size = 20 # ask Koen
-    offspring_size = 20 # ask Koen
+    num_generations = 100
+    population_size = 100
+    offspring_size = 50
 
     body_n_start_mutations: int = 10
     brain_n_start_mutations: int = 10

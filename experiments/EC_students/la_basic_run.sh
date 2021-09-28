@@ -2,8 +2,7 @@
 
 set -u
 
-N=20
-EXPERIMENT_NAME="la_basic"
+N=2
 CORES=4
 MANAGER_PATH="experiments/EC_students/la_basic.py"
 NO_LA="${1:-}"
@@ -20,19 +19,27 @@ for i in $(seq 1 $N); do
 
   if [[ "$NO_LA" = "nola" ]]; then
     EXPERIMENT_NAME="la_basic_nola"
+    PORT_START=12000
     echo "!! LA disabled !!"
-    export NO_LA
+  else
+    EXPERIMENT_NAME="la_basic"
+    PORT_START=11000
+    echo "!! LA enabled !!"
+    export LA
   fi
 
   run_start=$(date +%s)
 
-  ./revolve.py \
+  until ./revolve.py \
     --simulator-cmd gzserver \
     --run $i \
     --experiment-name $EXPERIMENT_NAME \
     --manager $MANAGER_PATH \
     --n-cores $CORES \
-    --evaluation-time $EVALUATION_TIME
+    --n-cores $PORT_START \
+    --evaluation-time $EVALUATION_TIME; do
+    sleep 1;
+  done
 
   run_end=$(date +%s)
   run_time=$((run_end-run_start))

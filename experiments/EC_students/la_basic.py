@@ -85,9 +85,9 @@ async def run():
     """
 
     # experiment params #
-    num_generations = 100
-    population_size = 100
-    offspring_size = 50
+    num_generations = 2
+    population_size = 5
+    offspring_size = 2
 
     body_n_start_mutations: int = 10
     brain_n_start_mutations: int = 10
@@ -106,6 +106,11 @@ async def run():
     innov_db_body = multineat.InnovationDatabase()
     innov_db_brain = multineat.InnovationDatabase()
 
+    if os.environ.get("LA"):
+        CppnneatBodyConfig.linearactuator = True
+
+    logger.info(f"LA enabled: {CppnneatBodyConfig.linearactuator}")
+
     # config for body
     body_config = CppnneatBodyConfig(
         multineat_params=multineat_params_body,
@@ -114,11 +119,6 @@ async def run():
         mate_average=False,
         interspecies_crossover=True,
     )
-
-    if os.environ.get("NO_LA"):
-        body_config.linearactuator = False
-
-    logger.info(f"LA enabled: {body_config.linearactuator}")
 
     # config for brain
     brain_config = CppnneatBrainConfig(
@@ -134,6 +134,8 @@ async def run():
         init_neuron_state=math.sqrt(2) / 2.0,
         reset_neuron_random=False,
     )
+
+    print(brain_config.linearactuator)
 
     # bodybrain composition genotype config
     bodybrain_composition_config = BodybrainCompositionConfig(

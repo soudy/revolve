@@ -2,7 +2,7 @@
 
 set -u
 
-N=2
+N=20
 CORES=4
 MANAGER_PATH="experiments/EC_students/la_basic.py"
 NO_LA="${1:-}"

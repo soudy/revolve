@@ -135,8 +135,6 @@ async def run():
         reset_neuron_random=False,
     )
 
-    print(brain_config.linearactuator)
-
     # bodybrain composition genotype config
     bodybrain_composition_config = BodybrainCompositionConfig(
         body_crossover=cppnneat_body_crossover,

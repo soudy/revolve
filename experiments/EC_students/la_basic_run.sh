@@ -36,7 +36,7 @@ for i in $(seq 1 $N); do
     --experiment-name $EXPERIMENT_NAME \
     --manager $MANAGER_PATH \
     --n-cores $CORES \
-    --n-cores $PORT_START \
+    --port-start $PORT_START \
     --evaluation-time $EVALUATION_TIME; do
     sleep 1;
   done

@@ -4,6 +4,7 @@ import asyncio
 import math
 import os
 import re
+import numpy as np
 from typing import TYPE_CHECKING
 
 from pyrevolve.custom_logging.logger import logger
@@ -367,7 +368,12 @@ class Population:
 
         # set target
         assert isinstance(phenotype._brain, BrainCPGTarget)
-        phenotype._brain.target = (5.0, 10.0, 0.0)
+
+        # generate random coordinates with radius 10
+        radius = 10
+        rand_theta = np.random.uniform(0, 2*np.pi)
+        x_target, y_target = radius*np.cos(rand_theta), radius*np.sin(rand_theta)
+        phenotype._brain.target = (x_target, y_target, 0.0)
 
         if self.analyzer_queue is not None:
             collisions, bounding_box = await self.analyzer_queue.test_robot(

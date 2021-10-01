@@ -3,7 +3,7 @@
 set -u
 
 N=20
-CORES=4
+CORES=r
 MANAGER_PATH="experiments/EC_students/la_basic.py"
 NO_LA="${1:-}"
 EVALUATION_TIME=30
@@ -25,7 +25,6 @@ for i in $(seq 1 $N); do
     EXPERIMENT_NAME="la_basic"
     PORT_START=11000
     echo "!! LA enabled !!"
-    export LA
   fi
 
   run_start=$(date +%s)

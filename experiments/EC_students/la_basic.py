@@ -106,9 +106,6 @@ async def run():
     innov_db_body = multineat.InnovationDatabase()
     innov_db_brain = multineat.InnovationDatabase()
 
-    if os.environ.get("LA"):
-        CppnneatBodyConfig.linearactuator = True
-
     logger.info(f"LA enabled: {CppnneatBodyConfig.linearactuator}")
 
     # config for body

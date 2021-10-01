@@ -3,7 +3,7 @@
 set -u
 
 N=20
-CORES=r
+CORES=4
 MANAGER_PATH="experiments/EC_students/la_basic.py"
 NO_LA="${1:-}"
 EVALUATION_TIME=30

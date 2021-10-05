@@ -1,4 +1,5 @@
 import os
+import csv
 
 # set these variables according to your experiments #
 dirpath = 'data'
@@ -144,6 +145,14 @@ for exp in experiments_type:
         behavior_headers, phenotype_headers = build_headers(path)
 
         file_summary = open(path + "/all_measures.tsv", "a")
+        fitnesses = {}
+        with open(path + "/data_fullevolution/fitness.csv") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                robot_id = row[0]
+                fitness = row[1]
+                fitnesses[robot_id] = fitness
+
         for r, d, f in os.walk(path + '/data_fullevolution/genotypes'):
             for file in f:
 
@@ -202,13 +211,7 @@ for exp in experiments_type:
                         file_summary.write('None' + '\t')
 
 
-                fitness_file = path + '/data_fullevolution/fitness/fitness_robot_' + robot_id + '.txt'
-                if os.path.isfile(fitness_file):
-                    with open(fitness_file) as file:
-                        fitness = file.read()
-                        file_summary.write(fitness + '\t')
-                else:
-                    file_summary.write('0' + '\t')
+                file_summary.write(fitnesses[robot_id] + '\t')
 
                 fb_file = path+'/data_fullevolution/fitness/fitness_robot_'+robot_id+'_revdeknn_9.txt'
                 if os.path.isfile(fb_file):

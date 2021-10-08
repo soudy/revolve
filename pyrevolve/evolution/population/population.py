@@ -369,10 +369,9 @@ class Population:
         # set target
         assert isinstance(phenotype._brain, BrainCPGTarget)
 
-        # generate random coordinates with radius 10
         radius = 10
-        rand_theta = np.random.uniform(0, 2*np.pi)
-        x_target, y_target = radius*np.cos(rand_theta), radius*np.sin(rand_theta)
+        theta = np.pi/3 # 60 degrees
+        x_target, y_target = radius*np.cos(theta), radius*np.sin(theta)
         phenotype._brain.target = (x_target, y_target, 0.0)
 
         if self.analyzer_queue is not None:

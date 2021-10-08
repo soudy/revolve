@@ -133,7 +133,7 @@ def _add_child(
     elif child_type == ActiveHingeModule:
         child.rgb = [0, 1, 0]
     elif child_type == LinearActuatorModule:
-        child.rgb = [1, 1, 0]
+        child.rgb = [0, 1, 1]
     else:  # Should actually never arrive here but just checking module type to be sure
         raise RuntimeError
 

@@ -48,7 +48,7 @@ for i in $(seq 1 $N); do
 done
 
 total_end=$(date +%s)
-total_time=$((run_end-run_start))
+total_time=$((total_end-total_start))
 echo "###########################################"
 echo "TOTAL DURATION: $((total_time/60)) minutes"
 echo "###########################################"

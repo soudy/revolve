@@ -18,11 +18,11 @@ for i in $(seq 1 $N); do
   echo "---------------- RUN $i/$N -----------------"
 
   if [[ "$NO_LA" = "nola" ]]; then
-    EXPERIMENT_NAME="la_basic_nola_60deg"
+    EXPERIMENT_NAME="la_plane_nola_60deg"
     PORT_START=12000
     echo "!! LA disabled !!"
   else
-    EXPERIMENT_NAME="la_basic_60deg"
+    EXPERIMENT_NAME="la_plane_60deg"
     PORT_START=11000
     echo "!! LA enabled !!"
   fi

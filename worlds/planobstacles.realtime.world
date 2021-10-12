@@ -7627,6 +7627,6 @@
            <include>
            <uri>model://tol_ground</uri>
            </include>
-           <plugin name="tol-control" filename="libtolworldcontrol.so" />
+           <plugin name="revolve-world" filename="libWorldControlPlugin.so" />
            </world>
            </sdf>

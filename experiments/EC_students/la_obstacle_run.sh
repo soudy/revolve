@@ -19,11 +19,11 @@ for i in $(seq 1 $N); do
 
   if [[ "$NO_LA" = "nola" ]]; then
     EXPERIMENT_NAME="obstacles_nola_30deg"
-    PORT_START=13000
+    PORT_START=3333
     echo "!! LA disabled !!"
   else
     EXPERIMENT_NAME="obstacles_la_30deg"
-    PORT_START=14000
+    PORT_START=4444
     echo "!! LA enabled !!"
   fi
 

@@ -19,9 +19,11 @@ base_directory <- c(
 analysis = 'analysis'
 output_directory = paste(base_directory[2],'/',analysis ,sep='')
 
+# experiments_type = c('la', 'nola')
 experiments_type = c(  'lsys'
                        
 )
+# runs = list(c(1:20), c(1:20))
 runs = list(
   c(1:1))
 environments = list( c('plane')
@@ -157,10 +159,7 @@ measures_labels = c(
 methods = c()
 for (exp in 1:length(experiments_type))
 {
-  for (env in 1:length(environments[[exp]]))
-  {
-    methods = c(methods, paste(experiments_type[exp], environments[[exp]][env], sep='_'))
-  }
+  methods = c(methods, paste(experiments_type[exp], sep='_'))
 }
 
 measures_snapshots_all = NULL
@@ -169,35 +168,31 @@ for (exp in 1:length(experiments_type))
 {
   for(run in runs[[exp]])
   {
-    for (env in 1:length(environments[[exp]]))
-    { 
-      measures   = read.table(paste(base_directory[exp],experiments_type[exp], run,"all_measures.tsv", sep='/'),
-                              header = TRUE, fill=TRUE)
-      
-      for( m in 1:length(measures_names))
-      {
-        measures[measures_names[m]] = as.numeric(as.character(measures[[measures_names[m]]]))
-      }
-      
-      snapshots   = read.table(paste(base_directory[exp],experiments_type[exp], run,"snapshots_ids.tsv", sep='/'),
-                               header = TRUE, fill=TRUE)
-      
-      measures_snapshots = sqldf('select * from snapshots inner join measures using(robot_id) order by generation')
-      
-      measures_snapshots$run = run
-      measures_snapshots$displacement_velocity_hill =   measures_snapshots$displacement_velocity_hill*100
-      measures_snapshots$velocity =   measures_snapshots$velocity*100
-      measures_snapshots$displacement_velocity =   measures_snapshots$displacement_velocity*100
-      measures_snapshots$run = as.factor(measures_snapshots$run)
-      measures_snapshots$method = paste(experiments_type[exp], environments[[exp]][env],sep='_')
-      measures_snapshots$method_label =  methods_labels[exp]
-      
-      if ( is.null(measures_snapshots_all)){
-        measures_snapshots_all = measures_snapshots
-      }else{
-        measures_snapshots_all = rbind(measures_snapshots_all, measures_snapshots)
-      }
-      
+    measures   = read.table(paste(base_directory[exp],experiments_type[exp], run,"all_measures.tsv", sep='/'),
+                            header = TRUE, fill=TRUE)
+    
+    for( m in 1:length(measures_names))
+    {
+      measures[measures_names[m]] = as.numeric(as.character(measures[[measures_names[m]]]))
+    }
+    
+    snapshots   = read.table(paste(base_directory[exp],experiments_type[exp], run,"snapshots_ids.tsv", sep='/'),
+                             header = TRUE, fill=TRUE)
+    
+    measures_snapshots = sqldf('select * from snapshots inner join measures using(robot_id) order by generation')
+    
+    measures_snapshots$run = run
+    measures_snapshots$displacement_velocity_hill =   measures_snapshots$displacement_velocity_hill*100
+    measures_snapshots$velocity =   measures_snapshots$velocity*100
+    measures_snapshots$displacement_velocity =   measures_snapshots$displacement_velocity*100
+    measures_snapshots$run = as.factor(measures_snapshots$run)
+    measures_snapshots$method = paste(experiments_type[exp], sep='_')
+    measures_snapshots$method_label =  methods_labels[exp]
+    
+    if ( is.null(measures_snapshots_all)){
+      measures_snapshots_all = measures_snapshots
+    }else{
+      measures_snapshots_all = rbind(measures_snapshots_all, measures_snapshots)
     }
   }
 }
@@ -340,7 +335,7 @@ for (i in 1:length(measures_names))
     }
     graph = graph  +  labs(y=measures_labels[i], x="generation", title="")
     
-    graph = graph +   scale_color_manual(values=experiments_type_colors, labels = c("lsys"))
+    graph = graph +   scale_color_manual(values=experiments_type_colors, labels = methods_labels)
     graph = graph  + theme_bw()
     graph = graph  + theme(legend.position="top" ,  legend.text=element_text(size=25), 
                            #legend.background = element_rect(fill = "darkgray",color = NA),

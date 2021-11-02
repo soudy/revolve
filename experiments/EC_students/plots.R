@@ -20,7 +20,7 @@ analysis = 'analysis'
 output_directory = paste(base_directory[2],'/',analysis ,sep='')
 
 # experiments_type = c('la', 'nola')
-experiments_type = c(  'lsys'
+experiments_type = c(  'la_descriptor_test'
                        
 )
 # runs = list(c(1:20), c(1:20))
@@ -82,6 +82,7 @@ measures_names = c(
   'coverage',
   'joints',
   'hinge_count',
+  'la_count',
   'active_hinges_count',
   'brick_count',
   'touch_sensor_count',
@@ -118,6 +119,7 @@ measures_labels = c(
   'coverage',
   'no of joints',
   'no of hinges',
+  'no of linear actuators',
   'no of active hinges',
   'no of bricks',
   'no of touch sensors',

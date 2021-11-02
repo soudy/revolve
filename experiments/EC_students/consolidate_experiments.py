@@ -91,6 +91,8 @@ def build_headers(path):
     file_summary.write(phenotype_headers[-1] + '\t')
     phenotype_headers.append('hinge_count')
     file_summary.write(phenotype_headers[-1] + '\t')
+    phenotype_headers.append('la_count')
+    file_summary.write(phenotype_headers[-1] + '\t')
     phenotype_headers.append('active_hinges_count')
     file_summary.write(phenotype_headers[-1] + '\t')
     phenotype_headers.append('brick_count')

@@ -44,6 +44,8 @@ class MeasureBody3D:
         self.symmetry = None
         # Number of active joints
         self.hinge_count = None
+        # Number of linear actuators
+        self.la_count = None
         # Number of bricks
         self.brick_count = None
         # Number of brick sensors
@@ -282,7 +284,7 @@ class MeasureBody3D:
         """
         bottom_layer = self.find_bottom_layer()
 
-        hinges, bricks, _brick_sensors, _touch_sensors \
+        hinges, _, bricks, _brick_sensors, _touch_sensors \
             = self.count_blocks(_filter=lambda module: module.substrate_coordinates[2] != bottom_layer)
 
         size_first_layer = hinges + bricks
@@ -405,14 +407,16 @@ class MeasureBody3D:
         """
         try:
             self.hinge_count = 0
+            self.la_count = 0
             self.brick_count = 0
             self.brick_sensor_count = 0
             self.touch_sensor_count = 0
 
-            _hinge_count, _brick_count, _brick_sensor_count, _touch_sensor_count \
+            _hinge_count, _la_count, _brick_count, _brick_sensor_count, _touch_sensor_count \
                 = self.count_blocks()
 
             self.hinge_count = _hinge_count
+            self.la_count = _la_count
             self.brick_count = _brick_count
             self.brick_sensor_count = _brick_sensor_count
             self.touch_sensor_count = _touch_sensor_count
@@ -427,6 +431,7 @@ class MeasureBody3D:
         Count amount of modules for each distinct type
         """
         hinge_count = 0
+        la_count = 0
         brick_count = 0
         brick_sensor_count = 0
         touch_sensor_count = 0
@@ -437,6 +442,7 @@ class MeasureBody3D:
             hinge_count += 1
         elif isinstance(module, LinearActuatorModule) and not _filter(module):
             hinge_count += 1
+            la_count += 1
         elif isinstance(module, BrickModule) and not _filter(module):
             brick_count += 1
         elif isinstance(module, BrickSensorModule) and not _filter(module):
@@ -450,14 +456,15 @@ class MeasureBody3D:
             for _slot, child_module in module.iter_children():
                 if child_module is None:
                     continue
-                _hinge_count, _brick_count, _brick_sensor_count, _touch_sensor_count \
+                _hinge_count, _la_count, _brick_count, _brick_sensor_count, _touch_sensor_count \
                     = self.count_blocks(child_module, _filter)
                 hinge_count += _hinge_count
+                la_count += _la_count
                 brick_count += _brick_count
                 brick_sensor_count += _brick_sensor_count
                 touch_sensor_count += _touch_sensor_count
 
-        return hinge_count, brick_count, brick_sensor_count, touch_sensor_count
+        return hinge_count, la_count, brick_count, brick_sensor_count, touch_sensor_count
 
     def measure_width_height_zdepth(self):
         """
@@ -525,6 +532,7 @@ class MeasureBody3D:
             'coverage': self.coverage,
             'joints': self.joints,
             'hinge_count': self.hinge_count,
+            'la_count': self.la_count,
             'active_hinges_count': self.active_hinges_count,
             'brick_count': self.brick_count,
             'touch_sensor_count': self.touch_sensor_count,

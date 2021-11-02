@@ -1,7 +1,10 @@
 import math
 from ..render.render import Render
 from ..render.grid import Grid
-from ..revolve_module import ActiveHingeModule, BrickModule, TouchSensorModule, BrickSensorModule, CoreModule
+from ..revolve_module import (
+    ActiveHingeModule, LinearActuatorModule, BrickModule, TouchSensorModule,
+    BrickSensorModule, CoreModule
+)
 from ...custom_logging.logger import logger
 
 
@@ -43,6 +46,8 @@ class MeasureBody:
         self.symmetry = None
         # Number of active joints
         self.hinge_count = None
+        # Number of linear actuators
+        self.la_count = None
         # Number of bricks
         self.brick_count = None
         # Number of brick sensors
@@ -302,6 +307,7 @@ class MeasureBody:
         try:
             if init:
                 self.hinge_count = 0
+                self.la_count = 0
                 self.brick_count = 0
                 self.brick_sensor_count = 0
                 self.touch_sensor_count = 0
@@ -309,6 +315,8 @@ class MeasureBody:
                 module = self.body
             elif isinstance(module, ActiveHingeModule):
                 self.hinge_count += 1
+            elif isinstance(module, LinearActuatorModule):
+                self.la_count += 1
             elif isinstance(module, BrickModule):
                 self.brick_count += 1
             elif isinstance(module, BrickSensorModule):
@@ -369,6 +377,7 @@ class MeasureBody:
             'coverage': self.coverage,
             'joints': self.joints,
             'hinge_count': self.hinge_count,
+            'la_count': self.la_count,
             'active_hinges_count': self.active_hinges_count,
             'brick_count': self.brick_count,
             'touch_sensor_count': self.touch_sensor_count,

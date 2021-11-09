@@ -3,8 +3,8 @@
 set -u
 
 N=20
-CORES=4
-MANAGER_PATH="experiments/EC_students/la_obstacle.py"
+CORES=8
+MANAGER_PATH="experiments/EC_students/la_hills.py"
 NO_LA="${1:-}"
 EVALUATION_TIME=30
 
@@ -18,11 +18,11 @@ for i in $(seq 1 $N); do
   echo "---------------- RUN $i/$N -----------------"
 
   if [[ "$NO_LA" = "nola" ]]; then
-    EXPERIMENT_NAME="obstacles_nola_30deg"
+    EXPERIMENT_NAME="hills_nola_30deg"
     PORT_START=3333
     echo "!! LA disabled !!"
   else
-    EXPERIMENT_NAME="obstacles_la_30deg"
+    EXPERIMENT_NAME="hills_la_30deg"
     PORT_START=4444
     echo "!! LA enabled !!"
   fi
@@ -36,7 +36,7 @@ for i in $(seq 1 $N); do
     --manager $MANAGER_PATH \
     --n-cores $CORES \
     --port-start $PORT_START \
-    --world worlds/planobstacles.world \
+    --world worlds/hills.world \
     --evaluation-time $EVALUATION_TIME; do
     sleep 1;
   done

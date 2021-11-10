@@ -36,7 +36,7 @@ for i in $(seq 1 $N); do
     --manager $MANAGER_PATH \
     --n-cores $CORES \
     --port-start $PORT_START \
-    --world worlds/hills.world \
+    --world worlds/hills_scaled.world \
     --evaluation-time $EVALUATION_TIME; do
     sleep 1;
   done

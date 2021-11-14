@@ -132,7 +132,8 @@ class SimulatorQueue:
                 await self._connections[i].reset(rall=True, time_only=True, model_only=False)
             while True:
                 logger.info(f"simulator {i} waiting for robot")
-                (individual, robot, future, conf, fitness_fun) = await self._robot_queue.get(timeout=10)
+                (individual, robot, future, conf, fitness_fun) = await self._robot_queue.get()
+                logger.info("got past await queue get")
                 self._free_simulator[i] = False
                 logger.info(f"Picking up robot {robot.id} into simulator {i}")
                 success = await self._worker_evaluate_robot(self._connections[i], robot, future, conf, fitness_fun)

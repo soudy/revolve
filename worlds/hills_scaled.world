@@ -23,9 +23,25 @@
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
     <physics type='ode'>
-      <max_step_size>0.001</max_step_size>
-      <real_time_factor>1</real_time_factor>
+      <max_step_size>0.005</max_step_size>
+
+      <!-- Run as fast as possible -->
       <real_time_update_rate>0</real_time_update_rate>
+
+      <ode>
+          <constraints>
+              <!-- Simulator.cpp -->
+              <erp>0.1</erp>
+              <cfm>10e-6</cfm>
+
+              <!-- Making this smaller seems to decrease rather than increase stability. -->
+              <contact_max_correcting_vel>100</contact_max_correcting_vel>
+              <contact_surface_layer>1e-8</contact_surface_layer>
+          </constraints>
+          <solver>
+              <type>world</type>
+          </solver>
+      </ode>
     </physics>
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>

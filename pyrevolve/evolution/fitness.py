@@ -277,6 +277,10 @@ def follow_line(robot_manager: RobotManager, robot: RevolveBot) -> float:
             - penalty_factor * dist_to_optimal_line
         )
 
+        if fitness > 50:
+            logger.info(f"Fitness > 50, setting fitness to 0")
+            fitness = 0
+
         logger.info(f"Fitness = {fitness}")
 
     return fitness

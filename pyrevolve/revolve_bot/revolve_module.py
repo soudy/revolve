@@ -392,17 +392,22 @@ class LinearActuatorModule(RevolveModule):
     Inherits class RevolveModule. Creates Robogen joint module
     """
     TYPE = 'LinearActuator'
-    VISUAL_MESH_FRAME = 'model://rg_robot/meshes/11.dae'
-    VISUAL_MESH_SERVO = 'model://rg_robot/meshes/2.dae'
-    COLLISION_BOX_FRAME = (4.5e-02, 1.575e-02, 1.5e-02)
-    COLLISION_BOX_SERVO = (3.5e-02, 0.5e-02, 0.5e-02)
-    COLLISION_BOX_SERVO_2 = (1.0e-3, 0.5e-2, 0.5e-02)
+    #VISUAL_MESH_FRAME = 'model://rg_robot/meshes/11.dae'
+    #VISUAL_MESH_SERVO = 'model://rg_robot/meshes/2.dae'
+    #COLLISION_BOX_FRAME = (4.5e-02, 1.575e-02, 1.5e-02)
+    #COLLISION_BOX_SERVO = (3.5e-02, 0.5e-02, 0.5e-02)
+    #COLLISION_BOX_SERVO_2 = (1.0e-3, 0.5e-2, 0.5e-02)
+    VISUAL_MESH_FRAME = 'model://rg_robot/meshes/w10.dae'
+    VISUAL_MESH_SERVO = 'model://rg_robot/meshes/m10.dae'
+    COLLISION_BOX_FRAME = (0.163, 0.018, 0.018)
+    COLLISION_BOX_SERVO = (0.105, 0.009, 0.009)
+    COLLISION_BOX_SERVO_2 = (0.008, 0.009, 0.009)
     COLLISION_BOX_SERVO_OFFSET = (
         SDF.math.Vector3(0, 0, 0),
-        SDF.math.Vector3(0, 0, 0),
+        SDF.math.Vector3(-0.08, 0, 0),
     )
     MASS_FRAME = grams(1.7)
-    MASS_SERVO = grams(9)
+    MASS_SERVO = grams(70)
 
     def __init__(self):
         super().__init__()
@@ -440,7 +445,7 @@ class LinearActuatorModule(RevolveModule):
         visual_servo.append(geometry)
 
         collision_servo = SDF.Collision(name_servo, self.MASS_SERVO)
-        collision_servo.translate(SDF.math.Vector3(-0.02, 0, 0))
+        collision_servo.translate(SDF.math.Vector3(-0.008, 0, 0))  #####-0.02
         geometry = SDF.BoxGeometry(self.COLLISION_BOX_SERVO)
         collision_servo.append(geometry)
 
